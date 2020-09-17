@@ -1,4 +1,4 @@
-from cameralibnew import *
+from cameralib import *
 
 print(serial.__version__)
 ports = serial.tools.list_ports.comports()
@@ -6,19 +6,15 @@ ports = serial.tools.list_ports.comports()
 for port, desc, hwid in sorted(ports):
     print("{}: {} [{}]".format(port, desc, hwid))
 
-ser = serial.Serial('COM5')
+ser = serial.Serial('/dev/ttyUSB0')
 ser.baudrate = 57600
 ser.timeout = 2
 
 print(camera_init(ser))
-for i in range(0,46000,100):
+for i in range(0,46000,1000):
     print(set_focus_value(ser, i))
     time.sleep(1)
-    
-    volt = get_focus_value(ser)
-    volt_converted = volt*0.001+24
-    print('voltage is ' + str(volt_converted))
-    print('=============')
-
+    print('focus value is now at ')
+    print(get_focus_value(ser))
 
 # ser.close()
