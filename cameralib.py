@@ -3,7 +3,7 @@ import serial.tools.list_ports
 import time
 
 
-sleep_time = 2
+sleep_time = 0.001
 
 def camera_init(ser, Analog=False, Standby=False):
     STX = bytes.fromhex('02')
@@ -23,7 +23,7 @@ def camera_init(ser, Analog=False, Standby=False):
     CRC = bytes([STX[0]+CDE[0]+ADD[0]+N_data[0]+Data[0]])
     command = STX + CDE + ADD + N_data + Data + CRC
     ser.write(command)
-    print('Writting Data ...')
+    print('Writing Data ...')
     print(command)
     time.sleep(sleep_time)
     response =  ser.read(4)
